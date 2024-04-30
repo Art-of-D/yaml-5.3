@@ -1,0 +1,20 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: my-cron-job
+  namespace: my-namespace
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: my-cron-job-container
+              image: busybox
+              args:
+                - /bin/sh
+                - -c
+                - date; echo "Cron job is running"
+          restartPolicy: OnFailure

@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multicontainers-app
+  labels:
+    app: multicontainer
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+    - name: debian-container
+      image: debian:latest
+      command: ["sleep", "infinity"]
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "250m"
+        limits:
+          memory: "256Mi"
+          cpu: "500m"

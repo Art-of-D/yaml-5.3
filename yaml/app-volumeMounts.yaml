@@ -1,0 +1,34 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-app
+  labels:
+    app: simple
+    env: dev
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 1
+        timeoutSeconds: 1
+        periodSeconds: 10
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 1
+        timeoutSeconds: 2
+        periodSeconds: 2
+      volumeMounts:
+        - name: data-volume
+          mountPath: /usr/share/nginx/html
+  volumes:
+    - name: data-volume
+      emptyDir: {}
